@@ -37,3 +37,4 @@
 # ignore Visual Studio config
 openglProj/.vs/*
 *.tlog
+*.tlog
