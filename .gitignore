@@ -33,3 +33,6 @@
 
 !openglProj/opengl/*
 !openglProj/opengl/**
+
+# ignore Visual Studio config
+openglProj/.vs/*
