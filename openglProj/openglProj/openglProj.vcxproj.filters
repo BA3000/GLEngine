@@ -76,13 +76,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="fragmentSource.frag">
       <Filter>源文件</Filter>
     </None>
     <None Include="vertexSource.vert">
       <Filter>源文件</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">

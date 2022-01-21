@@ -1,3 +1,1 @@
-﻿  Shader.cpp
-  openglProj.vcxproj -> G:\code\opengl_github\opengl_learning\openglProj\Debug\openglProj.exe
-  openglProj.vcxproj -> G:\code\opengl_github\opengl_learning\openglProj\Debug\openglProj.pdb (Partial PDB)
+﻿LINK : fatal error LNK1104: cannot open file 'glew32s.lib'
