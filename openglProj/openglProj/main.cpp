@@ -60,8 +60,9 @@ int main(int argc, char* argv[])
 	// path of current exe file
 	std::string exePath = argv[0];
 	// model path
-	std::string modelPath = exePath.substr(0, exePath.find_last_of('\\')) + "\\model\\nanosuit.obj";
-	std::cout << exePath.substr(0, exePath.find_last_of('\\')) << endl;
+	auto exeDir = exePath.substr(0, exePath.find_last_of('\\'));
+	std::string modelPath = exePath.substr(0, exeDir.find_last_of('\\')) + "\\Assets\\model\\nanosuit.obj";
+	std::cout << modelPath << endl;
 
 	// glfw: initialize and configure, opengl version: 3.3
 	glfwInit();
@@ -230,9 +231,9 @@ void processInput(GLFWwindow *window)
 		camera.speedX = 0;
 	}
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-		camera.speedY = 1.0f;
-	else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 		camera.speedY = -1.0f;
+	else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+		camera.speedY = 1.0f;
 	else {
 		camera.speedY = 0;
 	}
