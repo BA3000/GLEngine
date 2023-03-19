@@ -26,6 +26,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 unsigned int LoadImageToGPU(const char* filename, GLint internalFormat, GLenum format, int textureSlot);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 #pragma endregion
 
 #pragma region settings
@@ -33,8 +34,10 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+// mouse location
 float lastX = 0.0f;
 float lastY = 0.0f;
+float fov = 45.0f;
 bool firstMouse = true;
 #pragma endregion
 
@@ -107,7 +110,7 @@ int main(int argc, char* argv[])
 	Model model(modelPath);
 
 	glm::mat4 modelMat;
-	modelMat = glm::rotate(modelMat, glm::radians(-45.0f), glm::vec3(1.0f, 0, 0));
+	//modelMat = glm::rotate(modelMat, glm::radians(-45.0f), glm::vec3(1.0f, 0, 0));
 	glm::mat4 viewMat;
 	glm::mat4 projMat;
 	projMat = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
@@ -279,4 +282,16 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 
 	camera.ProcessMouseMovement(deltaX, deltaY);
 	//printf("%f\n", deltaX);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+	if (fov >= glm::radians(1.0f) && fov <= glm::radians(45.0f)) {
+		fov -= glm::radians(yoffset);
+	}
+	if (fov <= glm::radians(1.0f)) {
+		fov = glm::radians(1.0f);
+	}
+	if (fov >= glm::radians(45.0f)) {
+		fov = glm::radians(45.0f);
+	}
 }
