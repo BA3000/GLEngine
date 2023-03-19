@@ -38,13 +38,14 @@ void Mesh::Draw(Shader * shader)
 			glBindTexture(GL_TEXTURE_2D, textures[i].id);
 			shader->SetUniform1i("material.specular", 1);
 		}
-
 	}
+	glActiveTexture(GL_TEXTURE0);
+
+	// draw mesh
 	glBindVertexArray(VAO);
 	//glDrawArrays(GL_TRIANGLES, 0, 36);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
-	glActiveTexture(GL_TEXTURE0);
 }
 
 void Mesh::setupMesh()
