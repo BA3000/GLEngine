@@ -270,30 +270,30 @@ unsigned int LoadImageToGPU(const char* filename, GLint internalFormat, GLenum f
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	if (firstMouse == true)
 	{
-		lastX = xpos;
-		lastY = ypos;
+		lastX = static_cast<float>(xpos);
+		lastY = static_cast<float>(ypos);
 		firstMouse = false;
 	}
 	float deltaX;
 	float deltaY;
-	deltaX = xpos - lastX;
-	deltaY = ypos - lastY;
+	deltaX = static_cast<float>(xpos) - lastX;
+	deltaY = static_cast<float>(ypos) - lastY;
 
-	lastX = xpos;
-	lastY = ypos;
+	lastX = static_cast<float>(xpos);
+	lastY = static_cast<float>(ypos);
 
 	camera.ProcessMouseMovement(deltaX, deltaY);
 	//printf("%f\n", deltaX);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
-	if (fov >= glm::radians(1.0f) && fov <= glm::radians(45.0f)) {
-		fov -= glm::radians(yoffset);
+	if (fov >= glm::radians(20.0f) && fov <= glm::radians(45.0f)) {
+		fov -= static_cast<float>(glm::radians(yoffset));
 	}
-	if (fov <= glm::radians(1.0f)) {
-		fov = glm::radians(1.0f);
+	if (fov <= glm::radians(20.0f)) {
+		fov = static_cast<float>(glm::radians(20.0f));
 	}
 	if (fov >= glm::radians(45.0f)) {
-		fov = glm::radians(45.0f);
+		fov = static_cast<float>(glm::radians(45.0f));
 	}
 }
