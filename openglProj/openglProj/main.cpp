@@ -85,6 +85,7 @@ int main(int argc, char* argv[])
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetScrollCallback(window, scroll_callback);
 
 	// glad: load all OpenGL function pointers
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -110,10 +111,11 @@ int main(int argc, char* argv[])
 	Model model(modelPath);
 
 	glm::mat4 modelMat;
+	glm::mat4 modelMat2;
 	//modelMat = glm::rotate(modelMat, glm::radians(-45.0f), glm::vec3(1.0f, 0, 0));
 	glm::mat4 viewMat;
 	glm::mat4 projMat;
-	projMat = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+	
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -127,8 +129,8 @@ int main(int argc, char* argv[])
 		viewMat = camera.GetViewMatrix();
 
 		// set models' positions
-		glm::mat4 modelMat2;
 		modelMat2 = glm::translate(modelMat2, glm::vec3(0.0f, 0.0f, 0.0f));
+		projMat = glm::perspective(fov, 800.0f / 600.0f, 0.1f, 100.0f);
 
 		testShader->use();
 		glUniformMatrix4fv(glGetUniformLocation(testShader->ID, "modelMat"), 1, GL_FALSE, glm::value_ptr(modelMat2));
