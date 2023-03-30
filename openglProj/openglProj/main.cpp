@@ -44,11 +44,11 @@ bool firstMouse = true;
 #pragma region Camera Declare
 // Instantiate Camera class
 //Camera camera(glm::vec3(0, 0, 3.0f), glm::vec3(0, -1.0f, 0), glm::vec3(0, 1.0f, 0));
-Camera camera(glm::vec3(0, 0, 3.0f), glm::radians(15.0f), glm::radians(180.0f), glm::vec3(0, 1.0f, 0));
+Camera camera(glm::vec3(0, 0, 3.0f), glm::radians(0.0f), glm::radians(180.0f), glm::vec3(0, 1.0f, 0));
 #pragma endregion
 
 #pragma region Light Declare
-LightDirectional lightD(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec3(glm::radians(0.0f), glm::radians(45.0f), 0), glm::vec3(10.0f, 10.0f, 10.0f));
+LightDirectional lightD(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec3(glm::radians(-70.0f), glm::radians(180.0f), glm::radians(0.0f)), glm::vec3(10.0f, 10.0f, 10.0f));
 
 LightPoint lightP0(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec3(glm::radians(45.0f), 0, 0), glm::vec3(1.0f, 0.0f, 0.0f));
 LightPoint lightP1(glm::vec3(1.0f, 0.0f, -1.0f), glm::vec3(glm::radians(45.0f), 0, 0), glm::vec3(0.0f, 1.0f, 0.0f));
