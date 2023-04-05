@@ -8,15 +8,32 @@ class Shader
 {
 public:
 	Shader(const char* vertexPath, const char* fragmentPath);
+	virtual ~Shader();
 	std::string vertexString;
 	std::string fragmentString;
 	const char* vertexSource;
 	const char* fragmentSource;
 	unsigned int ID;	// shader program ID
 	void use();
-	void SetUniform3f(const char* paramNameString, glm::vec3 param);
-	void SetUniform1f(const char* paramNameString, float param);
-	void SetUniform1i(const char* paramNameString, int slot);
+	
+	void setBool(const std::string& name, bool value) const;
+	void setInt(const std::string& name, int value) const;
+	void setFloat(const std::string& name, float value) const;
+	
+	void setVec2(const std::string& name, const glm::vec2& value) const;
+	void setVec2(const std::string& name, float x, float y) const;
+	
+	void setVec3(const std::string& name, const glm::vec3& value) const;
+	void setVec3(const std::string& name, float x, float y, float z) const;
+
+	void setVec4(const std::string& name, const glm::vec4& value) const;
+	void setVec4(const std::string& name, float x, float y, float z, float w) const;
+
+	void setMat2(const std::string& name, const glm::mat2& mat) const;
+
+	void setMat3(const std::string& name, const glm::mat3& mat) const;
+
+	void setMat4(const std::string& name, const glm::mat4& mat) const;
 
 	enum Slot
 	{
