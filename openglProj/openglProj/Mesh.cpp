@@ -22,7 +22,7 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::Draw(Shader * shader)
+void Mesh::Draw(Shader* shader)
 {
 	for (unsigned int i = 0; i < textures.size(); i++)
 	{
@@ -30,13 +30,13 @@ void Mesh::Draw(Shader * shader)
 		{
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, textures[i].id);
-			shader->SetUniform1i("material.diffuse", 0);
+			shader->setInt("material.diffuse", 0);
 		}
 		else if (textures[i].type == "texture_specular")
 		{
 			glActiveTexture(GL_TEXTURE1);
 			glBindTexture(GL_TEXTURE_2D, textures[i].id);
-			shader->SetUniform1i("material.specular", 1);
+			shader->setInt("material.specular", 1);
 		}
 	}
 	glActiveTexture(GL_TEXTURE0);
