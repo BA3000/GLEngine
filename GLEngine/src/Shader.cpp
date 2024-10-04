@@ -22,6 +22,8 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
     {
         if (!vertexFile.is_open() || !fragmentFile.is_open())
         {
+            std::cout << "input vertexPath: " << vertexPath << " input fragmentPath: "
+                        << fragmentPath << std::endl;
             throw std::exception("open file error");
         }
         vertexSStream << vertexFile.rdbuf();
@@ -58,6 +60,11 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
     {
         printf(ex.what());
     }
+}
+
+Shader::Shader(const std::string &vertexPath, const std::string &fragmentPath)
+{
+    Shader(vertexPath.c_str(), fragmentPath.c_str());
 }
 
 Shader::~Shader()

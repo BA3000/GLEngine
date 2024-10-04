@@ -31,8 +31,8 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 #pragma region settings
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1920;
+const unsigned int SCR_HEIGHT = 1080;
 
 // mouse location
 float lastX = 0.0f;
@@ -64,8 +64,11 @@ int main(int argc, char* argv[])
 	std::string exePath = argv[0];
 	// model path
 	auto exeDir = exePath.substr(0, exePath.find_last_of('\\'));
-	std::string modelPath = exePath.substr(0, exeDir.find_last_of('\\')) + "\\Assets\\model\\nanosuit.obj";
+	std::string projPath = exePath.substr(0, exeDir.find_last_of('\\')) + "\\..\\..\\..\\";
+	std::string modelPath = projPath + "Resources\\models\\nanosuit.obj";
+#ifdef DEBUG
 	std::cout << modelPath << endl;
+#endif
 
 	// glfw: initialize and configure, opengl version: 3.3
 	glfwInit();
@@ -78,7 +81,7 @@ int main(int argc, char* argv[])
 #endif // __APPLE__
 
 	// glfw window creation
-	GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "GLEngine", NULL, NULL);
 	if (window == NULL) {
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
@@ -101,13 +104,20 @@ int main(int argc, char* argv[])
 	// depth test enable
 	glEnable(GL_DEPTH_TEST);
 #pragma region Init Shader Program
-	Shader* testShader = new Shader("vertexSource.vert", "fragmentSource.frag");
+	auto vertPath = projPath + "src\\vertexSource.vert";
+	auto fragPath = projPath + "src\\fragmentSource.frag";
+	Shader* testShader = new Shader(vertPath, fragPath);
 #pragma endregion
 
 #pragma region Init Material
+	std::string containerTexPath = projPath + "Resources\\textures\\container2.png";
+	std::string containerSpecularTexPath = projPath + "Resources\\textures\\container2_specular.png";
+#ifdef DEBUG
+	std::cout << containerTexPath << std::endl;
+#endif
 	Material * myMaterial = new Material(testShader,
-		LoadImageToGPU("container2.png", GL_RGBA, GL_RGBA, Shader::DIFFUSE),
-		LoadImageToGPU("container2_specular.png", GL_RGBA, GL_RGBA, Shader::SPECULAR),
+		LoadImageToGPU(containerTexPath.c_str(), GL_RGBA, GL_RGBA, Shader::DIFFUSE),
+		LoadImageToGPU(containerSpecularTexPath.c_str(), GL_RGBA, GL_RGBA, Shader::SPECULAR),
 		glm::vec3(1.0f, 1.0f, 1.0f),
 		32.0f);
 #pragma endregion
@@ -123,7 +133,6 @@ int main(int argc, char* argv[])
 
 	while (!glfwWindowShouldClose(window))
 	{
-
 		processInput(window);
 
 		// set background color
@@ -134,7 +143,7 @@ int main(int argc, char* argv[])
 
 		// set models' positions
 		modelMat2 = glm::translate(modelMat2, glm::vec3(0.0f, 0.0f, 0.0f));
-		projMat = glm::perspective(fov, 800.0f / 600.0f, 0.1f, 100.0f);
+		projMat = glm::perspective(fov, float(SCR_WIDTH) / float(SCR_HEIGHT), 0.1f, 100.0f);
 
 		testShader->use();
 		glUniformMatrix4fv(glGetUniformLocation(testShader->ID, "modelMat"), 1, GL_FALSE, glm::value_ptr(modelMat2));
@@ -239,6 +248,7 @@ void processInput(GLFWwindow *window)
 	else {
 		camera.speedX = 0;
 	}
+	// up and down
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
 		camera.speedY = -1.0f;
 	else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
@@ -264,7 +274,7 @@ unsigned int LoadImageToGPU(const char* filename, GLint internalFormat, GLenum f
 	}
 	else
 	{
-		printf("load iamge failed.\n");
+		std::cout << "load image failed. filename: " << filename << std::endl;
 	}
 	stbi_image_free(data);
 	return TexBuffer;
